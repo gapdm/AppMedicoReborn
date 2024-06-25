@@ -38,6 +38,10 @@ Route::get('/citas', function () {
     return view('citas');
 })->name('citas')->middleware('auth');
 
+Route::get('/citas/1', function () {
+    return view('citasDetalles');
+})->name('citas/1')->middleware('auth');
+
 Route::get('/medicos', function () {
     return view('medicos');
 })->name('medicos')->middleware('auth');

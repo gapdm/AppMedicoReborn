@@ -6,7 +6,6 @@
 @section('content')
 <div class="p-6">
     <div class="flex mb-4">
-        <!-- Tarjeta 1: Total de pacientes -->
         <div class="w-1/6 bg-white shadow-md rounded-lg p-4 mr-2">
             <div class="flex items-center mb-4">
                 <div class="bg-blue-500 rounded-full p-2">
@@ -21,10 +20,8 @@
             </div>
         </div>
 
-        <!-- Tarjeta 2: Estadísticas por género -->
-        <div class="w-1/6 bg-white shadow-md rounded-lg p-4 ml-2">
+        <div class="w-1/4 bg-white shadow-md rounded-lg p-4 ml-2">
             <div class="flex items-center justify-between">
-                <!-- Mujeres -->
                 <div class="flex items-center">
                     <div class="bg-pink-500 rounded-full p-2">
                         <svg class="fill-current text-white h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -37,7 +34,6 @@
                     </div>
                 </div>
                 
-                <!-- Hombres -->
                 <div class="flex items-center">
                     <div class="bg-blue-500 rounded-full p-2">
                         <svg class="fill-current text-white h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -53,7 +49,6 @@
         </div>
     </div>
 
-    <!-- Tabla de pacientes -->
     <div class="bg-white shadow-md rounded-lg p-4">
         <div class="mt-4 mb-4 items-end">
             <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="openModal()">Registrar Paciente</button>
@@ -72,7 +67,6 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí irían los datos de los pacientes, puedes iterar sobre una colección de Laravel -->
                 <tr>
                     <td class="border px-4 py-2">John Doe</td>
                     <td class="border px-4 py-2">35</td>

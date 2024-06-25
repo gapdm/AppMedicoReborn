@@ -5,7 +5,6 @@
 @stop
 @section('content')
 <div class="p-2">
-    <!-- Tabla de Medicos -->
     <div class="bg-white shadow-md rounded-lg p-4">
         <table class="w-full table-auto">
             <thead>
