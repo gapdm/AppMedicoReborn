@@ -39,6 +39,13 @@
                     @enderror
                 </div>
                 <div>
+                    <label class="block text-gray-700" for="telefono">Telefono</label>
+                    <input id="telefono" type="text" name="telefono" value="{{ old('telefono') }}" required class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    @error('telefono')
+                        <span class="text-red-600 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
                     <label class="block text-gray-700" for="sexo">Sexo</label>
                     <select name="sexo" id="sexo" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
                         <option value="0" {{ old('sexo') == '0' ? 'selected' : '' }}>Masculino</option>
@@ -66,14 +73,21 @@
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                <div id="especialidadDiv" class="col-span-2" style="display: none">
+                <div>
+                    <label class="block text-gray-700" for="password_confirmation">Confirmar Password</label>
+                    <input id="password_confirmation" type="password" name="password_confirmation" required class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    @error('password_confirmation')
+                        <span class="text-red-600 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div id="especialidadDiv" style="display: none">
                     <label class="block text-gray-700" for="especialidad">Especialidad</label>
                     <input id="especialidad" type="text" name="especialidad" value="{{ old('especialidad') }}" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
                     @error('especialidad')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                <div id="cedulaDiv" class="col-span-2" style="display: none">
+                <div id="cedulaDiv" style="display: none">
                     <label class="block text-gray-700" for="cedula">Cédula Profesional</label>
                     <input id="cedula" type="text" name="cedula" value="{{ old('cedula') }}" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
                     @error('cedula')

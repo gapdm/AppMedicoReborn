@@ -10,40 +10,45 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
-    $validated = $request->validate([
-        'nombre' => 'required|string|max:255',
-        'apellido' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'sexo' => 'required|in:0,1,2',
-        'rol' => 'required|in:0,1',
-        'password' => 'required|string|min:8',
-        'especialidad' => 'nullable|required_if:rol,1|string|max:255',
-        'cedula' => 'nullable|required_if:rol,1|string|max:255',
-    ],[
-        'nombre.required' => 'Nombre es requerido',
-        'apellido.required' => 'Apellidos son requeridos',
-        'email.required' => 'E-Mail es requerido',
-        'password.required' => 'Contraseña es requerida',
-        'especialidad.required_if' => 'Especialidad es requerida cuando el rol es Médico',
-        'cedula.required_if' => 'Cédula es requerida cuando el rol es Médico',
-    ]);
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'telefono' => 'nullable|string|max:255',
+            'sexo' => 'required|in:0,1,2',
+            'rol' => 'required|in:0,1',
+            'password' => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required|string|min:8',
+            'especialidad' => 'nullable|required_if:rol,1|string|max:255',
+            'cedula' => 'nullable|required_if:rol,1|string|max:255',
+        ], [
+            'nombre.required' => 'Nombre es requerido',
+            'apellido.required' => 'Apellidos son requeridos',
+            'email.required' => 'E-Mail es requerido',
+            'password.required' => 'Contraseña es requerida',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'especialidad.required_if' => 'Especialidad es requerida cuando el rol es Médico',
+            'cedula.required_if' => 'Cédula es requerida cuando el rol es Médico',
+        ]);
 
-    $user = User::create([
-        'nombre' => $validated['nombre'],
-        'apellido' => $validated['apellido'],
-        'email' => $validated['email'],
-        'sexo' => $validated['sexo'],
-        'rol' => $validated['rol'],
-        'password' => Hash::make($validated['password']),
-        'especialidad' => $validated['rol'] == 1 ? $validated['especialidad'] : null,
-        'cedula' => $validated['rol'] == 1 ? $validated['cedula'] : null,
-    ]);
+        $user = User::create([
+            'nombre' => $validated['nombre'],
+            'apellido' => $validated['apellido'],
+            'email' => $validated['email'],
+            'telefono' => $validated['telefono'],
+            'sexo' => $validated['sexo'],
+            'rol' => $validated['rol'],
+            'password' => Hash::make($validated['password']),
+            'especialidad' => $validated['rol'] == 1 ? $validated['especialidad'] : null,
+            'cedula' => $validated['rol'] == 1 ? $validated['cedula'] : null,
+        ]);
 
-    Auth::login($user);
+        Auth::login($user);
 
-    return redirect()->route('agenda');
-}
+        return redirect()->route('agenda');
+    }
 
 
     public function login(Request $request)

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -42,6 +43,4 @@ Route::get('/citas/1', function () {
     return view('citasDetalles');
 })->name('citas/1')->middleware('auth');
 
-Route::get('/medicos', function () {
-    return view('medicos');
-})->name('medicos')->middleware('auth');
+Route::get('/medicos', [UserController::class, 'index'])->name('medicos')->middleware('auth');
