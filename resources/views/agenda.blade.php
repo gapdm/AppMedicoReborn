@@ -4,12 +4,10 @@
 @stop
 
 @section('content')
-<div class="grid grid-cols-3 min-h-screen gap-4">
-    <!-- Calendario -->
-    <div class="p-8 mt-8 bg-white shadow rounded-lg">
+<div class="grid grid-cols-5 min-h-screen gap-4">
+    <div class="col-span-2 mt-8 p-8 bg-white shadow rounded-lg">
         <div id="calendar" class="bg-white p-4 shadow rounded-lg" style="height: 400px;"></div>
 
-        <!-- Lista de datos de ejemplo (reducida) -->
         <div class="mt-4 bg-slate-50">
             <h2 class="text-xl font-semibold text-gray-700">Lista de Datos</h2>
             <ul class="list-disc list-inside">
@@ -20,18 +18,15 @@
         </div>
     </div>
 
-    <!-- Agenda -->
-    <div class="col-span-2 pt-8">
+    <div class="col-span-3 pt-8">
         <div id="agenda" class="bg-white p-4 shadow rounded-lg"></div>
     </div>
 </div>
 
-<!-- Incluir los archivos de FullCalendar -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.10.1/main.min.css">
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
-<!-- Inicializar el calendario -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
