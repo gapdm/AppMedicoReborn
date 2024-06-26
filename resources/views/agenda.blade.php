@@ -4,9 +4,9 @@
 @stop
 
 @section('content')
-<div class="grid grid-cols-3 min-h-screen">
+<div class="grid grid-cols-3 min-h-screen gap-4">
     <!-- Calendario -->
-    <div class="p-8">
+    <div class="p-8 mt-8 bg-white shadow rounded-lg">
         <div id="calendar" class="bg-white p-4 shadow rounded-lg" style="height: 400px;"></div>
 
         <!-- Lista de datos de ejemplo (reducida) -->
@@ -58,7 +58,7 @@
 
         // Configurar el calendario de la agenda del día
         var agendaCalendar = new FullCalendar.Calendar(agendaEl, {
-            initialView: 'timeGridDay',
+            initialView: 'timeGridWeek',
             events: [
                 {
                     title: 'Evento 1',
