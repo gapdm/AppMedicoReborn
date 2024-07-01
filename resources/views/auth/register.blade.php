@@ -13,18 +13,18 @@
         <div class="w-full h-48 md:h-auto md:w-50 bg-cover bg-center flex items-center justify-center" style="background-color: #FF7A00;">
             <img src="{{url('/img/card-left.png')}}" alt="" class="object-contain max-h-full max-w-full">
         </div>
-        <div class="w-full p-8">
+        <div class="w-full p-4">
             <h2 class="text-2xl font-semibold text-gray-700 text-center">Registro</h2>
-            <form method="POST" action="{{ route('auth.register') }}" class="mt-4 grid grid-cols-2 gap-4">
+            <form method="POST" action="{{ route('auth.register') }}" class="mt-2 grid grid-cols-2 gap-4">
                 @csrf
-                <div class="mt-4">
+                <div class="mt-2">
                     <label class="block text-gray-700" for="nombre">Nombre(s)</label>
                     <input id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" required class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
                     @error('nombre')
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="mt-4">
+                <div class="mt-2">
                     <label class="block text-gray-700" for="apellido">Apellidos</label>
                     <input id="apellido" type="text" name="apellido" value="{{ old('apellido') }}" required class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500">
                     @error('apellido')
@@ -94,11 +94,11 @@
                         <span class="text-red-600 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="mt-4 flex items-center justify-between col-span-2">
+                <div class="mt-2 flex items-center justify-between col-span-2">
                     <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">Registrarse</button>
                 </div>
             </form>
-            <div class="mt-4 flex items-center justify-between">
+            <div class="mt-2 flex items-center justify-between">
                 <a href="{{route('loginForm')}}" class="text-center link-register w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1" style="color: white">
                     Log In
                 </a>

@@ -14,7 +14,7 @@
         <img src="{{url('/img/card-left.png')}}" alt=""></div>
         <div class="w-full p-8">
             <h2 class="text-2xl font-semibold text-gray-700 text-center">Login</h2>
-            <form method="POST" action="{{route('login')}}" class="mt-4">
+            <form method="POST" action="{{route('auth.login')}}" class="mt-4">
                 @csrf
                 <div class="mt-4">
                     <label class="block text-gray-700" for="email">Email</label>

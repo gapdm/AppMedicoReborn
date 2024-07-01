@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\MedicoController;
+use App\Http\Controllers\PacienteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,28 +14,19 @@ Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
-// Ruta para procesar el formulario de registro
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
 
-// Ruta para mostrar el formulario de inicio de sesión
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-// Ruta para procesar el formulario de inicio de sesión
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-// Ruta para cerrar sesión
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-// Ruta para redirigir después del registro o inicio de sesión
 Route::get('/agenda', function () {
     return view('agenda');
 })->name('agenda')->middleware('auth');
-
-Route::get('/pacientes', function () {
-    return view('pacientes');
-})->name('pacientes')->middleware('auth');
 
 Route::get('/citas', function () {
     return view('citas');
@@ -43,4 +36,7 @@ Route::get('/citas/1', function () {
     return view('citasDetalles');
 })->name('citas/1')->middleware('auth');
 
-Route::get('/medicos', [UserController::class, 'index'])->name('medicos')->middleware('auth');
+Route::get('/medicos', [MedicoController::class, 'index'])->name('medicos')->middleware('auth');
+
+Route::get('/pacientes', [PacienteController::class, 'index'])->name('pacientes')->middleware('auth');
+Route::post('/pacientes', [PacienteController::class, 'store'])->name('pacientes.store')->middleware('auth');

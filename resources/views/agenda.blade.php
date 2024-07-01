@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="grid grid-cols-5 min-h-screen gap-4">
-    <div class="col-span-2 mt-8 p-8 bg-white shadow rounded-lg">
+    <div class="col-span-2 mt-8 bg-white shadow rounded-lg">
         <div id="calendar" class="bg-white p-4 shadow rounded-lg" style="height: 400px;"></div>
 
         <div class="mt-4 bg-slate-50">

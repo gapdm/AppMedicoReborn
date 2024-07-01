@@ -65,6 +65,7 @@ class AuthController extends Controller
             return redirect()->intended('agenda');
         }
 
+        Log::log("error","error");
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
