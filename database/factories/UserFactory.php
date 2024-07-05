@@ -23,7 +23,7 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $roles = [0, 1];
+        $roles = [0, 1, 3];
         $sexos = [0, 1, 2];
 
         return [

@@ -4,76 +4,153 @@
 @stop
 
 @section('content')
-<div class="grid grid-cols-5 min-h-screen gap-4">
-    <div class="col-span-2 mt-8 bg-white shadow rounded-lg">
-        <div id="calendar" class="bg-white p-4 shadow rounded-lg" style="height: 400px;"></div>
 
-        <div class="mt-4 bg-slate-50">
-            <h2 class="text-xl font-semibold text-gray-700">Lista de Datos</h2>
-            <ul class="list-disc list-inside">
-                <li>Dato de ejemplo 1</li>
-                <li>Dato de ejemplo 2</li>
-                <li>Dato de ejemplo 3</li>
-            </ul>
-        </div>
+<style>
+    .fc .fc-daygrid-day-frame {
+        aspect-ratio: 1 / 1;
+    }
+
+    #lista .fc-toolbar-chunk:first-child,
+    #lista .fc-toolbar-chunk:nth-child(3) {
+        display: none;
+    }
+</style>
+
+<div x-data="{ open: false }" class="flex min-h-screen gap-4">
+    <div class="w-4/12 mt-8 bg-white shadow rounded-lg flex flex-col">
+        <div id="calendar" class="bg-white pr-4 pl-4 pt-4 shadow rounded-lg"></div>
+
+        <div id="lista" class="bg-white pr-4 pl-4 pb-4 shadow rounded-lg flex-grow" style=""></div>
     </div>
 
-    <div class="col-span-3 pt-8">
-        <div id="agenda" class="bg-white p-4 shadow rounded-lg"></div>
+    <div class="w-8/12 pt-8">
+        <div class="flex justify-end mb-4">
+            <button @click="open = true" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Registrar Cita
+            </button>
+        </div>
+        <div id="agenda" class="bg-white p-4 shadow rounded-lg h-full"></div>
+    </div>
+
+    <!-- Modal -->
+    <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Registrar Nueva Cita
+                            </h3>
+                            <div class="mt-2">
+                                <form action="{{route('agenda.store')}}" method="POST">
+                                    @csrf
+                                    <div class="mb-4">
+                                        <label for="paciente_id" class="block text-gray-700">Paciente</label>
+                                        <select name="paciente_id" id="paciente_id" class="w-full border border-gray-300 p-2 rounded-lg">
+                                            @foreach($pacientes as $paciente)
+                                                <option value="{{ $paciente->id }}">{{ $paciente->nombre }} {{ $paciente->apellido }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="medico_id" class="block text-gray-700">Médico</label>
+                                        <select name="medico_id" id="medico_id" class="w-full border border-gray-300 p-2 rounded-lg">
+                                            @foreach($medicos as $medico)
+                                                <option value="{{ $medico->id }}">{{ $medico->nombre }} {{ $medico->apellido }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="fecha" class="block text-gray-700">Fecha</label>
+                                        <input type="datetime-local" name="fecha" id="fecha" class="w-full border border-gray-300 p-2 rounded-lg">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="motivo_consulta" class="block text-gray-700">Motivo de Consulta</label>
+                                        <textarea name="motivo_consulta" id="motivo_consulta" class="w-full border border-gray-300 p-2 rounded-lg"></textarea>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <button type="button" @click="open = false" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                            Cancelar
+                                        </button>
+                                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.1/main.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@5.10.1/main.min.css">
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.14/index.global.min.js" integrity="sha512-JEbmnyttAbEkbkpvW1vRqBzY3Otrp0DFwux9+JQ6kXe2mQfUmBpImuREMZS0advTaaCMotaYB5gIng/uPw3r6w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var agendaEl = document.getElementById('agenda');
+        var listaEl = document.getElementById('lista');
+
+        var citas = @json($citas);
+        var pacientes = @json($pacientes);
+
+        var events = citas.map(function(cita) {
+            var pacienteCita = pacientes.filter(function(paciente){
+                console.log(paciente);
+                return paciente.id == cita.paciente_id;
+            })
+            return {
+                title: pacienteCita.nombre + ' ' + pacienteCita.apellido + ' - ' + cita.motivo_consulta,
+                start: cita.fecha,
+            };
+        });
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            events: [
-                {
-                    title: 'Evento 1',
-                    start: '2024-06-23T10:00:00'
-                },
-                {
-                    title: 'Evento 2',
-                    start: '2024-06-23T12:00:00'
-                },
-                {
-                    title: 'Evento 3',
-                    start: '2024-06-23T14:00:00'
-                }
-            ],
-            selectable: true
+            selectable: true,
+            events: events,
+            dateClick: function(info) {
+                agendaCalendar.gotoDate(info.date);
+                listaCalendar.gotoDate(info.date);
+            }
         });
 
-        // Configurar el calendario de la agenda del día
         var agendaCalendar = new FullCalendar.Calendar(agendaEl, {
             initialView: 'timeGridWeek',
-            events: [
-                {
-                    title: 'Evento 1',
-                    start: '2024-06-23T10:00:00'
-                },
-                {
-                    title: 'Evento 2',
-                    start: '2024-06-23T12:00:00'
-                },
-                {
-                    title: 'Evento 3',
-                    start: '2024-06-23T14:00:00'
-                }
-            ],
             selectable: true,
-            height: '100%' // Ajustar la altura al 100% del contenedor
+            height: '100%',
+            events: events,
+            dateClick: function(info) {
+                calendar.gotoDate(info.date);
+                listaCalendar.gotoDate(info.date);
+            }
+        });
+
+        var listaCalendar = new FullCalendar.Calendar(listaEl, {
+            initialView: 'listWeek',
+            selectable: true,
+            height: '100%',
+            events: events,
+            dateClick: function(info) {
+                calendar.gotoDate(info.date);
+                agendaCalendar.gotoDate(info.date);
+            }
         });
 
         calendar.render();
-        agendaCalendar.render(); // Renderizar el calendario de la agenda del día
+        agendaCalendar.render();
+        listaCalendar.render();
     });
 </script>
+
 @stop

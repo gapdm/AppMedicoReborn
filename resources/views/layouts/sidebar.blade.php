@@ -27,7 +27,7 @@
     <div class="relative">
         <button id="userButton" class="w-full flex items-center px-4 py-4 bg-orange-600 hover:bg-orange-700 focus:bg-orange-700 focus:outline-none">
             <i class="fas fa-user mr-2"></i>
-            @yield('usuario')
+            {{Auth::user()->nombre}} {{Auth::user()->apellido}}
             <i class="fas fa-chevron-up ml-auto"></i>
         </button>
         <div id="userMenu" class="absolute bottom-16 left-0 w-full bg-white text-black hidden">

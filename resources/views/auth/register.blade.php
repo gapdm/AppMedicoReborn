@@ -61,6 +61,7 @@
                     <select name="rol" id="rol" class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500" onchange="toggleFields()">
                         <option value="0" {{ old('rol') == '0' ? 'selected' : '' }}>Secretaria</option>
                         <option value="1" {{ old('rol') == '1' ? 'selected' : '' }}>Medico</option>
+                        <option value="3" {{ old('rol') == '3' ? 'selected' : '' }}>Enfermera</option>
                     </select>
                     @error('rol')
                         <span class="text-red-600 text-sm">{{ $message }}</span>

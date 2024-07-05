@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telefono')->nullable();
             $table->string('sexo');
-            $table->integer('rol');
+            $table->integer('rol'); // 0 = Secretaria, 1 = Medico, 2 = Admin, 3 = Enfermera
             $table->string('password');
             $table->string('especialidad')->nullable();
             $table->string('cedula')->nullable();
