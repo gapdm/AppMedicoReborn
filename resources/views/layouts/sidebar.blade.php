@@ -22,6 +22,12 @@
                 <i class="fas fa-user-md mr-2"></i>
                 Médicos
             </a>
+            @if (Auth::user()->rol==2)
+                <a href="{{ route('servicios') }}" class="flex items-center px-4 mt-4 py-4 w-9/12 hover:bg-white hover:text-orange-500 rounded focus:bg-white focus:text-orange-500 {{ Request::is('servicios*') ? 'bg-white text-orange-500' : '' }}">
+                    <i class="fas fa-user-md mr-2"></i>
+                    Servicios
+                </a>
+            @endif
         </nav>
     </div>
     <div class="relative">

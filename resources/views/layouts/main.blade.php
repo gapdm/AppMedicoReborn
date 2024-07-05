@@ -17,7 +17,7 @@
     @stack('scripts')
 </head>
 <body class="bg-gray-100">
-    <div class="flex min-h-screen">
+    <div class="flex">
         <aside class="w-64 bg-gray-800 text-white fixed top-0 left-0 h-full z-10">
             @include('layouts.sidebar')
         </aside>

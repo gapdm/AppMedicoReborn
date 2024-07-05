@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedicoController;
 use App\Http\Controllers\PacienteController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\ServicioController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,9 @@ Route::post('/agenda', [CitaController::class, 'storeAgenda'])->name('agenda.sto
 Route::get('/citas', function () {
     return view('citas');
 })->name('citas')->middleware('auth');
+
+Route::get('/servicios', [ServicioController::class, 'index'])->name('servicios')->middleware('auth');
+Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store')->middleware('auth');
 
 Route::get('/citas/1', function () {
     return view('citasDetalles');

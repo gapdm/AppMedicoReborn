@@ -17,14 +17,14 @@
 </style>
 
 <div x-data="{ open: false }" class="flex min-h-screen gap-4">
-    <div class="w-4/12 mt-8 bg-white shadow rounded-lg flex flex-col">
+    <div class="w-4/12 mt-24 bg-white shadow rounded-lg flex flex-col">
         <div id="calendar" class="bg-white pr-4 pl-4 pt-4 shadow rounded-lg"></div>
 
         <div id="lista" class="bg-white pr-4 pl-4 pb-4 shadow rounded-lg flex-grow" style=""></div>
     </div>
 
-    <div class="w-8/12 pt-8">
-        <div class="flex justify-end mb-4">
+    <div class="w-8/12 pt-8" style="max-height:93vh;">
+        <div class="flex justify-end mb-6">
             <button @click="open = true" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                 Registrar Cita
             </button>
@@ -106,9 +106,8 @@
 
         var events = citas.map(function(cita) {
             var pacienteCita = pacientes.filter(function(paciente){
-                console.log(paciente);
                 return paciente.id == cita.paciente_id;
-            })
+            })[0]
             return {
                 title: pacienteCita.nombre + ' ' + pacienteCita.apellido + ' - ' + cita.motivo_consulta,
                 start: cita.fecha,
