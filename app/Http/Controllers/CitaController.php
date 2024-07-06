@@ -22,7 +22,7 @@ class CitaController extends Controller
             'paciente_id' => 'required|exists:pacientes,id',
             'medico_id' => 'required|exists:users,id',
             'fecha' => 'required|date',
-            'motivo_consulta' => 'required|string|max:255',
+            'motivo_consulta' => 'nullable|string|max:255',
         ]);
 
         Cita::create($request->all());

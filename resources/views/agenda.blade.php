@@ -16,7 +16,7 @@
     }
 </style>
 
-<div x-data="{ open: false }" class="flex min-h-screen gap-4">
+<div class="flex min-h-screen gap-4"  x-data="{ open: false }">
     <div class="w-4/12 mt-24 bg-white shadow rounded-lg flex flex-col">
         <div id="calendar" class="bg-white pr-4 pl-4 pt-4 shadow rounded-lg"></div>
 
@@ -32,7 +32,6 @@
         <div id="agenda" class="bg-white p-4 shadow rounded-lg h-full"></div>
     </div>
 
-    <!-- Modal -->
     <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
             <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -108,9 +107,13 @@
             var pacienteCita = pacientes.filter(function(paciente){
                 return paciente.id == cita.paciente_id;
             })[0]
+            if(cita.motivo_consulta == null){
+                cita.motivo_consulta="Cita";
+            }
             return {
                 title: pacienteCita.nombre + ' ' + pacienteCita.apellido + ' - ' + cita.motivo_consulta,
                 start: cita.fecha,
+                id: cita.id
             };
         });
 
@@ -121,6 +124,9 @@
             dateClick: function(info) {
                 agendaCalendar.gotoDate(info.date);
                 listaCalendar.gotoDate(info.date);
+            },
+            eventClick: function(info) {
+                window.location.href = '/citas/' + info.event.id;
             }
         });
 
@@ -132,6 +138,9 @@
             dateClick: function(info) {
                 calendar.gotoDate(info.date);
                 listaCalendar.gotoDate(info.date);
+            },
+            eventClick: function(info) {
+                window.location.href = '/citas/' + info.event.id;
             }
         });
 
@@ -143,6 +152,9 @@
             dateClick: function(info) {
                 calendar.gotoDate(info.date);
                 agendaCalendar.gotoDate(info.date);
+            },
+            eventClick: function(info) {
+                window.location.href = '/citas/' + info.event.id;
             }
         });
 
@@ -151,5 +163,6 @@
         listaCalendar.render();
     });
 </script>
+
 
 @stop
