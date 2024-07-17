@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('motivo_consulta')->nullable();
             $table->text('notas_padecimiento')->nullable();
             $table->foreignId('medico_id')->constrained('users')->onDelete('cascade');
-            $table->unsignedTinyInteger('estado')->default(0); // 0 = Asignada, 1 = Empezada, 2 = Terminada
+            $table->unsignedTinyInteger('estado')->default(0); // 0 = Asignada, 1 = Confirmada, 2 = Terminada
             $table->dateTime('fecha');
             $table->timestamps();
         });

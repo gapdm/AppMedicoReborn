@@ -29,16 +29,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::get('/agenda', [CitaController::class, 'indexAgenda'])->name('agenda')->middleware('auth');
 Route::post('/agenda', [CitaController::class, 'storeAgenda'])->name('agenda.store')->middleware('auth');
 
-Route::get('/citas', function () {
-    return view('citas');
-})->name('citas')->middleware('auth');
-
 Route::get('/servicios', [ServicioController::class, 'index'])->name('servicios')->middleware('auth');
 Route::post('/servicios', [ServicioController::class, 'store'])->name('servicios.store')->middleware('auth');
 
-Route::get('/citas/1', function () {
-    return view('citasDetalles');
-})->name('citas/1')->middleware('auth');
+Route::get('/citas', [CitaController::class, 'indexCitas'] )->name('citas')->middleware('auth');
+Route::post('/citas', [CitaController::class, 'storeCitas'])->name('citas.store')->middleware('auth');
+Route::get('/citas/{id}', [CitaController::class, 'detalles'])->name('citas.detalles')->middleware('auth');
+Route::put('/citas/{id}', [CitaController::class, 'update'])->name('citas.update');
+
+
 
 Route::get('/medicos', [MedicoController::class, 'index'])->name('medicos')->middleware('auth');
 
