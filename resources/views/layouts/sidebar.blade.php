@@ -22,6 +22,12 @@
                 <i class="fas fa-user-md mr-2"></i>
                 Médicos
             </a>
+            @if (Auth::user()->rol!=1)
+                <a href="{{ route('ventas') }}" class="flex items-center px-4 mt-4 py-4 w-9/12 hover:bg-white hover:text-orange-500 rounded focus:bg-white focus:text-orange-500 {{ Request::is('ventas*') ? 'bg-white text-orange-500' : '' }}">
+                    <i class="fas fa-user-md mr-2"></i>
+                    Ventas
+                </a>
+            @endif
             @if (Auth::user()->rol==2)
                 <a href="{{ route('servicios') }}" class="flex items-center px-4 mt-4 py-4 w-9/12 hover:bg-white hover:text-orange-500 rounded focus:bg-white focus:text-orange-500 {{ Request::is('servicios*') ? 'bg-white text-orange-500' : '' }}">
                     <i class="fas fa-user-md mr-2"></i>
@@ -37,7 +43,6 @@
             <i class="fas fa-chevron-up ml-auto"></i>
         </button>
         <div id="userMenu" class="absolute bottom-16 left-0 w-full bg-white text-black hidden">
-            <a href="#'" class="block px-4 py-2 hover:bg-gray-200">Perfil</a>
             <form method="POST" action="{{ route('auth.logout') }}" class="block">
                 @csrf
                 <button type="submit" class="w-full text-left px-4 py-2 hover:bg-gray-200">Cerrar sesión</button>

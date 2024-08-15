@@ -19,6 +19,9 @@
                     <th class="px-4 py-2">Email</th>
                     <th class="px-4 py-2">Cedula Profesional</th>
                     <th class="px-4 py-2">Especialidad</th>
+                    @if (Auth::user()->rol==2)
+                    <th class="px-4 py-2">Acciones</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +35,15 @@
                         <td class="border px-4 py-2">{{ $medico->email }}</td>
                         <td class="border px-4 py-2">{{ $medico->cedula }}</td>
                         <td class="border px-4 py-2">{{ $medico->especialidad }}</td>
+                        @if (Auth::user()->rol==2)
+                        <td class="border px-4 py-2">
+                            <form action="{{ route('medicos.destroy', $medico->id) }}" method="POST" x-data="{ open: false }" x-on:submit="open = false" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">Eliminar</button>
+                            </form>
+                        </td>
+                        @endif
                     </tr>
                 @empty
                     <tr>

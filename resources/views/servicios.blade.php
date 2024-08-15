@@ -33,13 +33,20 @@
                             {{ $servicio->acceso == 0 ? 'Secretaria' : ($servicio->acceso == 1 ? 'Medico' : 'Admin') }}
                         </td>
                         <td class="border px-4 py-2">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">Eliminar</button>
+                            <!-- Botón de Editar -->
+                            <a href="{{ route('servicios.edit', $servicio->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</a>
+                            
+                            <!-- Botón de Eliminar -->
+                            <form action="{{ route('servicios.destroy', $servicio->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este servicio?');">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="border px-4 py-2 text-center">No hay servicios registrados</td>
+                        <td colspan="4" class="border px-4 py-2 text-center">No hay servicios registrados</td>
                     </tr>
                 @endforelse
             </tbody>

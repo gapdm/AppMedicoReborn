@@ -6,15 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Paciente;
 use App\Models\Cita;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use PDF;
 
 class CitaController extends Controller
 {
-
     public function detalles($id)
     {
         $cita = Cita::findOrFail($id);
         $paciente = Paciente::findOrFail($cita->paciente_id);
-        $medico = Paciente::findOrFail($cita->medico_id);
+        $medico = User::findOrFail($cita->medico_id);
         return view('citasDetalles', compact('cita','paciente','medico'));
     }
 
@@ -26,8 +28,12 @@ class CitaController extends Controller
     }
 
     public function indexCitas(){
-        $citas = Cita::where('estado', '!=', 2)->get();
-        $medicos = User::where('rol',1)->paginate(10);
+        if (Auth::user()->rol == 2){
+            $citas = Cita::get();
+        } else {
+            $citas = Cita::where('estado', '!=', 2)->get();
+        }
+        $medicos = User::where('rol', 1)->paginate(10);
         $pacientes = Paciente::get();
         return view('citas', compact('citas','medicos','pacientes'));
     }
@@ -60,10 +66,11 @@ class CitaController extends Controller
         return redirect()->route('citas')->with('success', 'Cita registrada exitosamente.');
     }
 
-    public function update(Request $request, Cita $cita)
+    public function update(Request $request, $id)
     {
-        
-        $request->validate([
+        $cita = Cita::findOrFail($id);
+
+        $validatedData = $request->validate([
             'talla' => 'nullable|numeric',
             'temperatura' => 'nullable|numeric',
             'saturacion_oxigeno' => 'nullable|integer',
@@ -75,8 +82,32 @@ class CitaController extends Controller
             'fecha' => 'nullable|date',
         ]);
 
-        $cita->update($request->all());
+        foreach ($validatedData as $key => $value) {
+            $cita->$key = $value;
+        }
+
+        $cita->save();
+
+        Log::debug('Cita actualizada manualmente:', $cita->toArray());
 
         return redirect()->route('citas.detalles', ['id' => $cita->id])->with('success', 'Cita actualizada correctamente.');
+    }
+
+    public function destroy($id)
+    {
+        $cita = Cita::findOrFail($id);
+        $cita->delete();
+
+        return redirect()->route('citas')->with('success', 'Cita eliminada exitosamente.');
+    }
+
+    public function exportPdf($id)
+    {
+        $cita = Cita::findOrFail($id);
+        $paciente = $cita->paciente;
+        $medico = $cita->medico;
+
+        $pdf = PDF::loadView('pdf', compact('cita', 'paciente', 'medico'));
+        return $pdf->download('cita_'.$cita->id.'.pdf');
     }
 }

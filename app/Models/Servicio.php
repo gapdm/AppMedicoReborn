@@ -14,4 +14,9 @@ class Servicio extends Model
         'precio',
         'acceso',
     ];
+
+    public function ventas()
+    {
+        return $this->belongsToMany(Venta::class, 'venta_servicio')->withPivot('cantidad');
+    }
 }

@@ -69,5 +69,11 @@
             </button>
         </div>
     </form>
+    <button class="inline-flex justify-center mt-2 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="window.location.href='{{ route('citas') }}'">
+        Cancelar
+    </button>
+    <button type="button" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" onclick="window.location.href='{{ route('citas.export-pdf', ['id' => $cita->id]) }}'">
+        Exportar PDF
+    </button>
 </div>
 @endsection

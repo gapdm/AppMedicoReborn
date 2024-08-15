@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Paciente;
+use App\Models\Servicio;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -44,6 +45,12 @@ class DatabaseSeeder extends Seeder
             'sexo' => 0,
             'rol' => 0,
             'password' => Hash::make('contraseña1234'),
+        ]);
+
+        Servicio::factory()->create([
+            'servicio' => 'Consulta',
+            'precio' => 50,
+            'acceso' => 0
         ]);
 
         User::factory()->count(10)->create();
